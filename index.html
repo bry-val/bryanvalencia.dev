@@ -3,43 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>B V // LR</title> <!-- Cryptic Title -->
+    <title>SYS_ACCESS <BRYN.V></title>
     <link rel="stylesheet" href="style.css">
-    <!-- Placeholder for a mono/glitch font if desired, e.g., from Google Fonts -->
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=VT323&display=swap" rel="stylesheet"> -->
+    <!-- Recommended Monospace Hacker Font (e.g., from Google Fonts) -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;700&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet"> -->
 </head>
 <body>
-    <div id="void-canvas">
-        <div id="header-fragment" class="text-fragment" data-text="BRYAN VALENCIA"></div>
-        <div id="subtitle-fragment" class="text-fragment" data-sub-text="Decipherer of Latent Realities"></div>
-
-        <div id="navigation-glyphs">
-            <span class="glyph" data-target="reality-stream-1">[ ■ ]</span>
-            <span class="glyph" data-target="reality-stream-2">[ ▲ ]</span>
-            <span class="glyph" data-target="reality-stream-3">[ ● ]</span>
+    <div id="terminal">
+        <div id="terminal-header">
+            <span class="sys-label">SYSTEM</span>: BRYN.V_SUBSYS_TERMINAL_7
+            <span class="user-label">USER</span>: GHOST_FRAGMENT
+            <span class="status-light">●</span>
         </div>
-
-        <div id="content-matrix">
-            <!-- Content will be injected here by JavaScript -->
-            <div id="reality-stream-1" class="reality-content" style="display: none;">
-                <p data-scramble="Initiating signal trace...">Initiating signal trace...</p>
-                <p data-scramble="Patterns emerge from noise. The first layer speaks of conceptual architecture, unseen frameworks.">Patterns emerge from noise. The first layer speaks of conceptual architecture, unseen frameworks.</p>
-                <p data-scramble="[PROJECT_OMEGA_SEQUENCE] // A study in foundational paradoxes.">PROJECT_OMEGA_SEQUENCE // A study in foundational paradoxes.</p>
-            </div>
-            <div id="reality-stream-2" class="reality-content" style="display: none;">
-                <p data-scramble="Tuning to a divergent frequency...">Tuning to a divergent frequency...</p>
-                <p data-scramble="Whispers of interconnected data streams, the flow of pure information. The art of the query.">Whispers of interconnected data streams, the flow of pure information. The art of the query.</p>
-                <p data-scramble="[NODE_THETA_EXPLORATION] // Navigating informational chaos for emergent clarity.">NODE_THETA_EXPLORATION // Navigating informational chaos for emergent clarity.</p>
-            </div>
-            <div id="reality-stream-3" class="reality-content" style="display: none;">
-                <p data-scramble="Resonance found. The core transmission...">Resonance found. The core transmission...</p>
-                <p data-scramble="To map the hidden is to shape the future. Contact is made by understanding the signal.">To map the hidden is to shape the future. Contact is made by understanding the signal.</p>
-                <p data-scramble="[CONTACT_PROTOCOL_SIGMA] // bv.query@<classified_domain>">CONTACT_PROTOCOL_SIGMA // bv.query@&lt;classified_domain&gt;</p>
-            </div>
+        <div id="output">
+            <!-- Initial boot sequence / messages will appear here -->
         </div>
-
-        <div id="footer-echo" class="text-fragment" data-text="Signal integrity: fluctuating."></div>
+        <div id="input-line">
+            <span id="prompt">&gt;&gt;</span>
+            <span id="command-input"></span>
+            <span id="cursor">_</span>
+        </div>
+        <div id="command-palette" style="display:none;">
+            <!-- Available commands after boot -->
+            <span class="command" data-command="cat /identity.log">cat /identity.log</span>
+            <span class="command" data-command="ls /projects/">ls /projects/</span>
+            <span class="command" data-command="exec /contact.sh">exec /contact.sh</span>
+            <span class="command" data-command="help">help</span>
+            <span class="command" data-command="clear">clear</span>
+        </div>
     </div>
+
+    <div id="preload-content" style="display:none;">
+        <div data-command-response="cat /identity.log">
+            <p class="sys-message">Accessing: /secure_logs/identity.log...</p>
+            <p class="sys-message">DECRYPTING BLOCK CIPHER...</p>
+            <div class="progress-bar-container"><div class="progress-bar"></div></div>
+            <p class="log-entry">[LOG_ENTRY_001]: BRYAN VALENCIA</p>
+            <p class="log-entry">[CLASSIFICATION]: Architect of Emergent Systems</p>
+            <p class="log-entry">[STATUS]: Active // Signal Obfuscated</p>
+            <p class="log-entry">[MOTTO]: "The system is a canvas; the code, a conversation."
+        </div>
+        <div data-command-response="ls /projects/">
+            <p class="sys-message">Querying /projects/ directory_index...</p>
+            <div class="progress-bar-container"><div class="progress-bar"></div></div>
+            <p class="file-listing">Project_CHIMERA.dev        // Status: [COMPILED]</p>
+            <p class="file-listing">Project_SPECTRE.concept    // Status: [SEEDING]</p>
+            <p class="file-listing">Data_Stream_ECHO.exp     // Status: [ANALYZING]</p>
+            <p class="sys-message">Use 'open &lt;filename&gt;' for details (simulation only).</p>
+        </div>
+        <div data-command-response="exec /contact.sh">
+            <p class="sys-message">Executing contact protocol: /usr/local/bin/contact.sh</p>
+            <div class="progress-bar-container"><div class="progress-bar"></div></div>
+            <p class="sys-response">CONTACT CHANNEL ESTABLISHED:</p>
+            <p class="sys-response">[ENCRYPTED_COMM]: bv.signal@sub_ether.net</p>
+            <p class="sys-response">Send query. Await response. Patience advised.</p>
+        </div>
+        <div data-command-response="help">
+            <p class="sys-message">Displaying available commands:</p>
+            <p class="help-text">  cat /identity.log  - Display identity manifest.</p>
+            <p class="help-text">  ls /projects/        - List current project directives.</p>
+            <p class="help-text">  exec /contact.sh   - Initiate secure contact procedure.</p>
+            <p class="help-text">  help                 - Show this help message.</p>
+            <p class="help-text">  clear                - Clear terminal output.</p>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

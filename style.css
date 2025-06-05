@@ -1,176 +1,211 @@
-/* Try using a more 'digital' or 'glitchy' font. 
-   Examples (include in HTML via Google Fonts):
-   font-family: 'VT323', monospace; 
-   font-family: 'Special Elite', cursive; 
+/* Recommended Monospace Hacker Fonts (link in HTML):
+   font-family: 'Source Code Pro', monospace;
+   font-family: 'VT323', monospace;
+   font-family: 'Share Tech Mono', monospace;
 */
 body {
-    font-family: 'VT323', monospace; /* Defaulting to VT323, ensure it's linked in HTML */
-    background-color: #000000; /* The Void */
-    color: #c0c0c0; /* Ghostly grey/white */
+    font-family: 'VT323', monospace; /* Defaulting to VT323, or choose another */
+    background-color: #000000;
+    color: #00FF00; /* Classic green terminal text */
+    /* color: #FFA500; */ /* Alternative: Amber text */
+    font-size: 16px; /* Base font size, can be adjusted */
+    line-height: 1.4;
+    margin: 0;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    margin: 0;
-    overflow: hidden; /* Prevent scrollbars from minor animation overflows */
-    cursor: default; /* Less like a standard webpage */
+    min-height: calc(100vh - 20px);
+    overflow: hidden;
 }
 
-#void-canvas {
-    width: 100%;
+#terminal {
+    width: 95%;
     max-width: 800px;
-    text-align: center;
-    position: relative;
-    padding: 20px;
+    height: 90vh;
+    max-height: 600px;
+    background-color: rgba(0, 10, 0, 0.85); /* Darker, slightly transparent terminal bg */
+    border: 1px solid #003300;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2), 0 0 5px rgba(0,255,0,0.3) inset;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative; /* For pseudo-elements like scanlines */
 }
 
-.text-fragment {
-    opacity: 0;
-    animation: fadeIn 3s forwards;
-    letter-spacing: 2px;
-    margin-bottom: 20px; /* Base spacing */
-}
-
-#header-fragment {
-    font-size: 2.5em;
-    color: #e0e0e0; /* Brighter white for header */
-    animation-delay: 0.5s;
-    margin-bottom: 5px;
-    min-height: 1.2em; /* Reserve space to avoid jump */
-}
-
-#subtitle-fragment {
-    font-size: 1.2em;
-    color: #88aaff; /* Faint electric blue */
-    animation-delay: 2s;
-    margin-bottom: 40px;
-    min-height: 1.2em; /* Reserve space */
-}
-
-#navigation-glyphs {
-    margin-bottom: 40px;
-    opacity: 0;
-    animation: fadeIn 2s 3.5s forwards;
-}
-
-.glyph {
-    font-size: 1.5em;
-    color: #777;
-    margin: 0 15px;
-    cursor: pointer;
-    transition: color 0.3s, text-shadow 0.3s;
-    opacity: 0;
-    animation: fadeInGlyph 1s forwards;
-}
-
-.glyph:nth-child(1) { animation-delay: 4s; }
-.glyph:nth-child(2) { animation-delay: 4.3s; }
-.glyph:nth-child(3) { animation-delay: 4.6s; }
-
-.glyph:hover, .glyph.active {
-    color: #ccddff; /* Electric blue accent */
-    text-shadow: 0 0 5px #5577cc, 0 0 10px #5577cc;
-}
-
-#content-matrix {
-    min-height: 150px; /* Space for content to appear */
-    position: relative;
-    border: 1px dashed rgba(100,100,150,0.2); /* Faint boundary */
-    padding: 20px;
-    margin-bottom: 40px;
-}
-
-.reality-content p {
-    font-size: 1em;
-    line-height: 1.7;
-    color: #a0a0a0;
-    margin-bottom: 10px;
-    opacity: 0; /* JS will handle reveal */
-    transition: opacity 1s ease-in-out;
-}
-
-#footer-echo {
-    font-size: 0.9em;
-    color: #555;
-    animation-delay: 5s;
-    position: fixed; /* Or absolute if preferred */
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+/* Subtle Scanline Effect */
+#terminal::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    text-align: center;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        transparent,
+        transparent 2px,
+        rgba(0, 255, 0, 0.03) 3px,
+        rgba(0, 255, 0, 0.03) 4px
+    );
+    animation: scanlines 10s linear infinite alternate;
+    opacity: 0.5;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
+@keyframes scanlines {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 50px; } 
 }
 
-@keyframes fadeInGlyph {
-    to {
-        opacity: 0.7; /* Glyphs are slightly more ethereal */
-    }
+#terminal-header {
+    background-color: #002200;
+    padding: 3px 8px;
+    font-size: 0.8em;
+    border-bottom: 1px solid #004400;
+    color: #00aa00;
+    display: flex;
+    justify-content: space-between;
 }
 
-/* Glitchy text effect (applied by JS for more control, but CSS can support) */
-.glitch-active {
-    animation: textGlitch 0.15s infinite alternate;
+.status-light {
+    color: #00FF00;
+    animation: pulseStatusLight 2s infinite;
 }
 
-@keyframes textGlitch {
+@keyframes pulseStatusLight {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+#output {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    word-wrap: break-word;
+}
+
+#output p, #output div {
+    margin: 0 0 3px 0; /* Reduced margin for tighter terminal look */
+    white-space: pre-wrap; /* Preserve whitespace and newlines */
+}
+
+.sys-message {
+    color: #00cc00; /* Slightly brighter for system messages */
+}
+
+.log-entry {
+    color: #00dd00;
+}
+
+.file-listing {
+    color: #00ee00;
+}
+
+.help-text {
+    color: #00bb00;
+}
+
+.error-message {
+    color: #FF0000; /* Red for errors */
+}
+
+#input-line {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-top: 1px solid #003300;
+    background-color: rgba(0,0,0,0.2);
+}
+
+#prompt {
+    color: #00FF00;
+    margin-right: 5px;
+}
+
+#command-input {
+    flex-grow: 1;
+    color: #00FF00;
+    min-height: 1.2em; /* Ensure it has some height */
+}
+
+#cursor {
+    width: 8px; /* Width of the cursor character */
+    background-color: #00FF00;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+    display: inline-block; /* To give it height */
+    height: 1.1em; /* Match text height */
+}
+
+@keyframes blink {
+    0%, 100% { background-color: #00FF00; }
+    50% { background-color: transparent; }
+}
+
+#command-palette {
+    padding: 5px 10px;
+    background-color: rgba(0,0,0,0.3);
+    border-top: 1px dashed #003300;
+}
+
+#command-palette .command {
+    color: #00aa00;
+    margin-right: 15px;
+    cursor: pointer;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+
+#command-palette .command:hover {
+    color: #00FF00;
+    text-shadow: 0 0 5px #00FF00;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 80%;
+    height: 10px;
+    background-color: #002200;
+    border: 1px solid #004400;
+    margin: 5px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%; /* JS will animate this */
+    height: 100%;
+    background-color: #00FF00;
+    transition: width 0.3s ease-out; /* Smooth progress */
+}
+
+/* Glitch effect (can be added by JS to specific lines) */
+.glitch {
+    animation: glitch-animation 0.3s infinite alternate steps(3, end);
+}
+
+@keyframes glitch-animation {
     0% {
-        transform: translate(0, 0);
-        text-shadow: 1px 1px 0px #aa0000, -1px -1px 0px #00aa00;
-        opacity: 0.9;
-    }
-    25% {
-        transform: translate(2px, -1px);
-        text-shadow: -1px 1px 0px #aa0000, 1px -1px 0px #00aa00;
-    }
-    50% {
-        transform: translate(-1px, 2px);
-        text-shadow: 1px -1px 0px #aa0000, -1px 1px 0px #00aa00;
-        opacity: 1;
-    }
-    75% {
-        transform: translate(1px, 1px);
-        text-shadow: -1px -1px 0px #aa0000, 1px 1px 0px #00aa00;
+        transform: translate(2px, 1px) skewX(-5deg);
+        text-shadow: -2px 0 #FF0000, 2px 0 #0000FF;
+        opacity: 0.8;
     }
     100% {
-        transform: translate(0, 0);
-        text-shadow: 1px 1px 0px #aa0000, -1px -1px 0px #00aa00;
-        opacity: 0.9;
+        transform: translate(-1px, -1px) skewX(5deg);
+        text-shadow: 2px 0 #FF0000, -2px 0 #0000FF;
+        opacity: 1;
     }
 }
 
-/* Subtle background animation */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,0.01),
-        rgba(255,255,255,0.01) 1px,
-        transparent 1px,
-        transparent 60px /* Increased spacing for subtlety */
-    ),
-    repeating-linear-gradient(
-        90deg,
-        rgba(255,255,255,0.01),
-        rgba(255,255,255,0.01) 1px,
-        transparent 1px,
-        transparent 60px
-    );
-    animation: backgroundShift 120s linear infinite;
-    z-index: -1;
-    opacity: 0.3;
+/* Custom Scrollbar */
+#output::-webkit-scrollbar {
+    width: 8px;
 }
-
-@keyframes backgroundShift {
-    0% { background-position: 0 0; }
-    100% { background-position: 1200px 1200px; } /* Adjust for desired speed/effect */
+#output::-webkit-scrollbar-track {
+    background: #001100;
+}
+#output::-webkit-scrollbar-thumb {
+    background: #005500;
+    border: 1px solid #003300;
+}
+#output::-webkit-scrollbar-thumb:hover {
+    background: #008800;
 }
