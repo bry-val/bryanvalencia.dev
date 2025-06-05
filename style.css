@@ -1,0 +1,176 @@
+/* Try using a more 'digital' or 'glitchy' font. 
+   Examples (include in HTML via Google Fonts):
+   font-family: 'VT323', monospace; 
+   font-family: 'Special Elite', cursive; 
+*/
+body {
+    font-family: 'VT323', monospace; /* Defaulting to VT323, ensure it's linked in HTML */
+    background-color: #000000; /* The Void */
+    color: #c0c0c0; /* Ghostly grey/white */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; /* Prevent scrollbars from minor animation overflows */
+    cursor: default; /* Less like a standard webpage */
+}
+
+#void-canvas {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    position: relative;
+    padding: 20px;
+}
+
+.text-fragment {
+    opacity: 0;
+    animation: fadeIn 3s forwards;
+    letter-spacing: 2px;
+    margin-bottom: 20px; /* Base spacing */
+}
+
+#header-fragment {
+    font-size: 2.5em;
+    color: #e0e0e0; /* Brighter white for header */
+    animation-delay: 0.5s;
+    margin-bottom: 5px;
+    min-height: 1.2em; /* Reserve space to avoid jump */
+}
+
+#subtitle-fragment {
+    font-size: 1.2em;
+    color: #88aaff; /* Faint electric blue */
+    animation-delay: 2s;
+    margin-bottom: 40px;
+    min-height: 1.2em; /* Reserve space */
+}
+
+#navigation-glyphs {
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeIn 2s 3.5s forwards;
+}
+
+.glyph {
+    font-size: 1.5em;
+    color: #777;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: color 0.3s, text-shadow 0.3s;
+    opacity: 0;
+    animation: fadeInGlyph 1s forwards;
+}
+
+.glyph:nth-child(1) { animation-delay: 4s; }
+.glyph:nth-child(2) { animation-delay: 4.3s; }
+.glyph:nth-child(3) { animation-delay: 4.6s; }
+
+.glyph:hover, .glyph.active {
+    color: #ccddff; /* Electric blue accent */
+    text-shadow: 0 0 5px #5577cc, 0 0 10px #5577cc;
+}
+
+#content-matrix {
+    min-height: 150px; /* Space for content to appear */
+    position: relative;
+    border: 1px dashed rgba(100,100,150,0.2); /* Faint boundary */
+    padding: 20px;
+    margin-bottom: 40px;
+}
+
+.reality-content p {
+    font-size: 1em;
+    line-height: 1.7;
+    color: #a0a0a0;
+    margin-bottom: 10px;
+    opacity: 0; /* JS will handle reveal */
+    transition: opacity 1s ease-in-out;
+}
+
+#footer-echo {
+    font-size: 0.9em;
+    color: #555;
+    animation-delay: 5s;
+    position: fixed; /* Or absolute if preferred */
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    text-align: center;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInGlyph {
+    to {
+        opacity: 0.7; /* Glyphs are slightly more ethereal */
+    }
+}
+
+/* Glitchy text effect (applied by JS for more control, but CSS can support) */
+.glitch-active {
+    animation: textGlitch 0.15s infinite alternate;
+}
+
+@keyframes textGlitch {
+    0% {
+        transform: translate(0, 0);
+        text-shadow: 1px 1px 0px #aa0000, -1px -1px 0px #00aa00;
+        opacity: 0.9;
+    }
+    25% {
+        transform: translate(2px, -1px);
+        text-shadow: -1px 1px 0px #aa0000, 1px -1px 0px #00aa00;
+    }
+    50% {
+        transform: translate(-1px, 2px);
+        text-shadow: 1px -1px 0px #aa0000, -1px 1px 0px #00aa00;
+        opacity: 1;
+    }
+    75% {
+        transform: translate(1px, 1px);
+        text-shadow: -1px -1px 0px #aa0000, 1px 1px 0px #00aa00;
+    }
+    100% {
+        transform: translate(0, 0);
+        text-shadow: 1px 1px 0px #aa0000, -1px -1px 0px #00aa00;
+        opacity: 0.9;
+    }
+}
+
+/* Subtle background animation */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.01),
+        rgba(255,255,255,0.01) 1px,
+        transparent 1px,
+        transparent 60px /* Increased spacing for subtlety */
+    ),
+    repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.01),
+        rgba(255,255,255,0.01) 1px,
+        transparent 1px,
+        transparent 60px
+    );
+    animation: backgroundShift 120s linear infinite;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+@keyframes backgroundShift {
+    0% { background-position: 0 0; }
+    100% { background-position: 1200px 1200px; } /* Adjust for desired speed/effect */
+}
